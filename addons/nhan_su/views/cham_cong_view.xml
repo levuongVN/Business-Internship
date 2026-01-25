@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ACTION -->
+        <record id="action_cham_cong" model="ir.actions.act_window">
+            <field name="name">Chấm công</field>
+            <field name="res_model">cham_cong</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="view_cham_cong_tree" model="ir.ui.view">
+            <field name="name">cham.cong.tree</field>
+            <field name="model">cham_cong</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="nhan_vien_id"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="so_gio_lam"/>
+                    <field name="so_gio_ot"/>
+                    <field name="tien_ot"/>
+                    <field name="luong_thang" sum="Tổng lương"/>
+                </tree>
+            </field>
+        </record>
+<!-- FORM VIEW -->
+<record id="view_cham_cong_form" model="ir.ui.view">
+    <field name="name">cham.cong.form</field>
+    <field name="model">cham_cong</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+
+                <!-- THÔNG TIN CHUNG -->
+                <group string="Thông tin chấm công">
+                    <group>
+                        <field name="nhan_vien_id"/>
+                        <field name="check_in"/>
+                        <field name="check_out"/>
+                    </group>
+
+                    <group>
+                        <field name="so_gio_lam" readonly="1"/>
+                        <field name="so_gio_ot" readonly="1"/>
+                        <field name="tien_ot" readonly="1"/>
+                    </group>
+                </group>
+
+                <!-- TRẠNG THÁI -->
+                <group string="Trạng thái">
+                    <field name="di_muon" readonly="1"/>
+                    <field name="ve_som" readonly="1"/>
+                </group>
+
+                <!-- LƯƠNG -->
+                <group string="Lương">
+                    <field name="luong_co_ban"/>
+                    <field name="cong_khoan"/>
+                    <field name="luong_ngay" readonly="1"/>
+                    <field name="phu_cap"/>
+                    <field name="thuong_phat"/>
+                    <field name="luong_thang" readonly="1"/>
+                </group>
+
+                <!-- GHI CHÚ -->
+                <group string="Ghi chú">
+                    <field name="ghi_chu"/>
+                </group>
+
+            </sheet>
+        </form>
+    </field>
+</record>
+    </data>
+</odoo>

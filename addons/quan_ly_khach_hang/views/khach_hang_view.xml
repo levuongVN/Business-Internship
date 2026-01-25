@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- TREE VIEW -->
+    <record id="view_khach_hang_tree" model="ir.ui.view">
+        <field name="name">khach.hang.tree</field>
+        <field name="model">khach_hang</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ma_khach_hang"/>
+                <field name="ten_khach_hang"/>
+                <field name="so_dien_thoai"/>
+                <field name="nhan_vien_phu_trach_id"/>
+                <field name="trang_thai"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_khach_hang_form" model="ir.ui.view">
+        <field name="name">khach.hang.form</field>
+        <field name="model">khach_hang</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ma_khach_hang"/>
+                            <field name="ten_khach_hang"/>
+                            <field name ="loai_khach_hang" />
+                            <field name="trang_thai"/>
+                        </group>
+                        <group>
+                            <field name="so_dien_thoai"/>
+                            <field name="email"/>
+                            <field name="dia_chi"/>
+                            <field name="nhan_vien_phu_trach_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_khach_hang" model="ir.actions.act_window">
+        <field name="name">Khách hàng</field>
+        <field name="res_model">khach_hang</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_quan_ly_khach_hang_root"
+              name="Quản lý khách hàng"
+              sequence="10"/>
+
+    <menuitem id="menu_khach_hang"
+              name="Khách hàng"
+              parent="menu_quan_ly_khach_hang_root"
+              action="action_khach_hang"
+              sequence="1"/>
+
+</odoo>

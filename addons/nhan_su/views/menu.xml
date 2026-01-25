@@ -49,5 +49,11 @@
             sequence="4"
             action="action_danh_sach_chung_chi_bang_cap"
         />
+        <menuitem name="Chấm công"
+            id="menu_cham_cong"
+            parent="menu_root"
+            sequence="5"
+            action="action_cham_cong"
+        />
     </data>
 </odoo>

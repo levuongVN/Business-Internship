@@ -29,8 +29,12 @@ class NhanVien(models.Model):
         "danh_sach_chung_chi_bang_cap", 
         inverse_name="nhan_vien_id", 
         string = "Danh sách chứng chỉ bằng cấp")
+    luong_co_ban = fields.Float(string='Lương cơ bản', default=0)
+    cong_khoan = fields.Integer(string='Công khoán', default=26)
+    phu_cap = fields.Float(string='Phụ cấp', default=0)
+    thuong_phat = fields.Float(string='Thưởng / Phạt', default=0)
     so_nguoi_bang_tuoi = fields.Integer("Số người bằng tuổi", 
-                                        compute="so_nguoi_bang_tuoi",
+                                        compute ="_compute_so_nguoi_bang_tuoi",
                                         store=True
                                         )
     
@@ -77,3 +81,21 @@ class NhanVien(models.Model):
         for record in self:
             if record.tuoi < 18:
                 raise ValidationError("Tuổi không được bé hơn 18")
+            
+def bao_cao_cham_cong_thang(self, thang, nam):
+    start = date(nam, thang, 1)
+    end = date(nam + (thang // 12), (thang % 12) + 1, 1)
+
+    records = self.env['cham_cong'].search([
+        ('nhan_vien_id', '=', self.id),
+        ('check_in', '>=', start),
+        ('check_in', '<', end)
+    ])
+
+    return {
+        'tong_ngay_cong': len(records),
+        'tong_gio_lam': sum(records.mapped('so_gio_lam')),
+        'tong_ot': sum(records.mapped('so_gio_ot')),
+        'tong_tien_ot': sum(records.mapped('tien_ot')),
+        'so_lan_di_muon': len(records.filtered(lambda r: r.di_muon)),
+    }
