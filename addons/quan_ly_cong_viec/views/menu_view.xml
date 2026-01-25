@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_quan_ly_cong_viec_root" 
+              name="Quản lý công việc" 
+              sequence="10"/>
+
+    <menuitem id="menu_cong_viec" 
+              name="Công việc" 
+              parent="menu_quan_ly_cong_viec_root" 
+              action="action_cong_viec" 
+              sequence="10"/>
+
+    <menuitem id="menu_configuration" 
+              name="Cấu hình" 
+              parent="menu_quan_ly_cong_viec_root" 
+              sequence="100"/>
+
+    <menuitem id="menu_loai_cong_viec" 
+              name="Loại công việc" 
+              parent="menu_configuration" 
+              action="action_loai_cong_viec" 
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_quan_ly_cong_viec_cong_viec,quan_ly_cong_viec.cong_viec,model_cong_viec,base.group_user,1,1,1,1
+access_quan_ly_cong_viec_loai_cong_viec,quan_ly_cong_viec.loai_cong_viec,model_loai_cong_viec,base.group_user,1,1,1,1

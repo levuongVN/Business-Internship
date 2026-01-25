@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cong_viec_form" model="ir.ui.view">
+        <field name="name">cong.viec.form</field>
+        <field name="model">cong_viec</field>
+        <field name="arch" type="xml">
+            <form string="Công việc">
+                <header>
+                    <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ten_cong_viec" placeholder="Tên công việc..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="nhan_vien_thuc_hien_id"/>
+                            <field name="khach_hang_id"/>
+                            <field name="loai_cong_viec_id"/>
+                        </group>
+                        <group>
+                            <field name="han_chot"/>
+                            <field name="muc_do_uu_tien" widget="priority"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Mô tả">
+                            <field name="mo_ta"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cong_viec_tree" model="ir.ui.view">
+        <field name="name">cong.viec.tree</field>
+        <field name="model">cong_viec</field>
+        <field name="arch" type="xml">
+            <tree string="Công việc" decoration-danger="trang_thai=='huy'" decoration-success="trang_thai=='hoan_thanh'" decoration-info="trang_thai=='moi'">
+                <field name="ten_cong_viec"/>
+                <field name="nhan_vien_thuc_hien_id"/>
+                <field name="khach_hang_id"/>
+                <field name="han_chot"/>
+                <field name="muc_do_uu_tien" widget="priority"/>
+                <field name="trang_thai" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cong_viec_kanban" model="ir.ui.view">
+        <field name="name">cong.viec.kanban</field>
+        <field name="model">cong_viec</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="trang_thai" class="o_kanban_small_column" sample="1">
+                <field name="ten_cong_viec"/>
+                <field name="nhan_vien_thuc_hien_id"/>
+                <field name="muc_do_uu_tien"/>
+                <field name="trang_thai"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="ten_cong_viec"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_dropdown_kanban dropdown">
+                                        <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                            <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="nhan_vien_thuc_hien_id"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="muc_do_uu_tien" widget="priority"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <record id="view_cong_viec_search" model="ir.ui.view">
+        <field name="name">cong.viec.search</field>
+        <field name="model">cong_viec</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm công việc">
+                <field name="ten_cong_viec"/>
+                <field name="nhan_vien_thuc_hien_id"/>
+                <field name="khach_hang_id"/>
+                <!-- <filter string="Công việc của tôi" name="my_tasks" domain="[('nhan_vien_thuc_hien_id.user_id', '=', uid)]"/> -->
+                <group expand="0" string="Group By">
+                    <filter string="Nhân viên" name="group_by_nhan_vien" context="{'group_by': 'nhan_vien_thuc_hien_id'}"/>
+                    <filter string="Trạng thái" name="group_by_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                    <filter string="Mức độ ưu tiên" name="group_by_uu_tien" context="{'group_by': 'muc_do_uu_tien'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cong_viec" model="ir.actions.act_window">
+        <field name="name">Công việc</field>
+        <field name="res_model">cong_viec</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>

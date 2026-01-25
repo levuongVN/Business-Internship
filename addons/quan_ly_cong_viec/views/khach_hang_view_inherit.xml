@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_khach_hang_form_inherit" model="ir.ui.view">
+        <field name="name">khach.hang.form.inherit</field>
+        <field name="model">khach_hang</field>
+        <field name="inherit_id" ref="quan_ly_khach_hang.view_khach_hang_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="action_create_cong_viec" string="Tạo công việc" type="object" class="oe_highlight"/>
+                    <!-- field trang_thai will be inherited from original view if it was in header, 
+                         but original view didn't have header initially, checking context -->
+                </header>
+            </xpath>
+             <xpath expr="//sheet/group" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_cong_viec" type="object" class="oe_stat_button" icon="fa-tasks">
+                        <field name="cong_viec_ids" widget="statinfo" string="Công việc"/>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
