@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_loai_cong_viec_form" model="ir.ui.view">
+        <field name="name">loai.cong.viec.form</field>
+        <field name="model">loai_cong_viec</field>
+        <field name="arch" type="xml">
+            <form string="Loại công việc">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ten_loai"/>
+                        </group>
+                        <group>
+                            <field name="mo_ta"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_loai_cong_viec_tree" model="ir.ui.view">
+        <field name="name">loai.cong.viec.tree</field>
+        <field name="model">loai_cong_viec</field>
+        <field name="arch" type="xml">
+            <tree string="Loại công việc">
+                <field name="ten_loai"/>
+                <field name="mo_ta"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_loai_cong_viec" model="ir.actions.act_window">
+        <field name="name">Loại công việc</field>
+        <field name="res_model">loai_cong_viec</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
