@@ -5,3 +5,4 @@ db_password = odoo
 db_user = odoo
 db_port = 5432
 xmlrpc_port = 8069
+gemini_api_key = YOUR_KEY

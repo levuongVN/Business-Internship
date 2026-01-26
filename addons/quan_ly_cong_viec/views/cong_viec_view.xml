@@ -7,6 +7,13 @@
             <form string="Công việc">
                 <header>
                     <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}"/>
+                    <button
+                        name="ai_predict_priority"
+                        type="object"
+                        string="AI gợi ý ưu tiên"
+                        class="btn-primary"
+                        icon="fa-magic"
+                    />
                 </header>
                 <sheet>
                     <div class="oe_title">
