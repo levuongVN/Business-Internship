@@ -4,6 +4,7 @@
     'summary': 'Module quản lý khách hàng cho doanh nghiệp',
     'category': 'Administration',
     'author': 'BTL Odoo',
+    'license': 'LGPL-3',
     'depends': [
         'base',
         'nhan_su',

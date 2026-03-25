@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_quan_ly_cong_viec_root" 
-              name="Quản lý công việc" 
-              sequence="10"/>
+    <menuitem id="menu_quan_ly_cong_viec_root" name="Quản lý công việc" sequence="10" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
 
-    <menuitem id="menu_cong_viec" 
-              name="Công việc" 
-              parent="menu_quan_ly_cong_viec_root" 
-              action="action_cong_viec" 
-              sequence="10"/>
+    <menuitem id="menu_cong_viec" name="Công việc" parent="menu_quan_ly_cong_viec_root" action="action_cong_viec" sequence="10" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+    <menuitem id="menu_tuong_tac_khach_hang" name="Tương tác khách hàng" parent="menu_quan_ly_cong_viec_root" action="action_tuong_tac_khach_hang" sequence="20" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+    <menuitem id="menu_hop_dong_khach_hang" name="Hợp đồng khách hàng" parent="menu_quan_ly_cong_viec_root" action="action_hop_dong_khach_hang" sequence="30" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+    <menuitem id="menu_cong_viec_chatbot" name="Chat bot" parent="menu_quan_ly_cong_viec_root" action="action_cong_viec_chatbot" sequence="40" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
 
-    <menuitem id="menu_configuration" 
-              name="Cấu hình" 
-              parent="menu_quan_ly_cong_viec_root" 
-              sequence="100"/>
+    <menuitem id="menu_reporting" name="Báo cáo" parent="menu_quan_ly_cong_viec_root" sequence="80" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+    <menuitem id="menu_bao_cao_cong_viec" name="Khối lượng công việc" parent="menu_reporting" action="action_bao_cao_cong_viec" sequence="10" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
 
-    <menuitem id="menu_loai_cong_viec" 
-              name="Loại công việc" 
-              parent="menu_configuration" 
-              action="action_loai_cong_viec" 
-              sequence="10"/>
+    <record id="action_khach_hang_can_cham_soc" model="ir.actions.act_window">
+        <field name="name">Khách hàng cần chăm sóc</field>
+        <field name="res_model">khach_hang</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="quan_ly_khach_hang.view_khach_hang_search"/>
+        <field name="domain">['|', ('tong_cong_viec_mo', '&gt;', 0), ('lich_hen_gan_nhat', '!=', False)]</field>
+    </record>
+    <menuitem id="menu_khach_hang_can_cham_soc" name="Khách hàng cần chăm sóc" parent="menu_reporting" action="action_khach_hang_can_cham_soc" sequence="20" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+
+    <record id="action_hop_dong_sap_het_han" model="ir.actions.act_window">
+        <field name="name">Hợp đồng sắp hết hạn</field>
+        <field name="res_model">hop_dong_khach_hang</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hop_dong_khach_hang_search"/>
+        <field name="domain">[('is_sap_het_han', '=', True)]</field>
+    </record>
+    <menuitem id="menu_hop_dong_sap_het_han" name="Hợp đồng sắp hết hạn" parent="menu_reporting" action="action_hop_dong_sap_het_han" sequence="30" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_user,quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+
+    <menuitem id="menu_configuration" name="Cấu hình" parent="menu_quan_ly_cong_viec_root" sequence="100" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
+    <menuitem id="menu_loai_cong_viec" name="Loại công việc" parent="menu_configuration" action="action_loai_cong_viec" sequence="10" groups="quan_ly_cong_viec.group_quan_ly_cong_viec_manager"/>
 </odoo>

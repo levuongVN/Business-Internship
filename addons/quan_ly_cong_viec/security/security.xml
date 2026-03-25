@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_quan_ly_cong_viec" model="ir.module.category">
+        <field name="name">Quản lý công việc</field>
+        <field name="description">Nhóm quyền cho quản lý khách hàng, công việc, tương tác và hợp đồng.</field>
+        <field name="sequence">35</field>
+    </record>
+
+    <record id="group_quan_ly_cong_viec_user" model="res.groups">
+        <field name="name">Nhân viên quản lý công việc</field>
+        <field name="category_id" ref="module_category_quan_ly_cong_viec"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_quan_ly_cong_viec_manager" model="res.groups">
+        <field name="name">Quản lý quản lý công việc</field>
+        <field name="category_id" ref="module_category_quan_ly_cong_viec"/>
+        <field name="implied_ids" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="quan_ly_khach_hang.menu_quan_ly_khach_hang_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user')), (4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_manager'))]"/>
+    </record>
+
+    <record id="quan_ly_khach_hang.menu_khach_hang" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user')), (4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_manager'))]"/>
+    </record>
+
+    <record id="rule_cong_viec_user" model="ir.rule">
+        <field name="name">Công việc theo người phụ trách</field>
+        <field name="model_id" ref="model_cong_viec"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user'))]"/>
+        <field name="domain_force">['|', '|', '|', ('nhan_vien_thuc_hien_id.user_id', '=', user.id), ('khach_hang_id.nhan_vien_phu_trach_id.user_id', '=', user.id), ('tuong_tac_id.nhan_vien_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_cong_viec_manager" model="ir.rule">
+        <field name="name">Công việc toàn bộ cho quản lý</field>
+        <field name="model_id" ref="model_cong_viec"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_tuong_tac_user" model="ir.rule">
+        <field name="name">Tương tác theo người phụ trách</field>
+        <field name="model_id" ref="model_tuong_tac_khach_hang"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user'))]"/>
+        <field name="domain_force">['|', '|', '|', ('nhan_vien_id.user_id', '=', user.id), ('khach_hang_id.nhan_vien_phu_trach_id.user_id', '=', user.id), ('cong_viec_ids.nhan_vien_thuc_hien_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_tuong_tac_manager" model="ir.rule">
+        <field name="name">Tương tác toàn bộ cho quản lý</field>
+        <field name="model_id" ref="model_tuong_tac_khach_hang"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_hop_dong_user" model="ir.rule">
+        <field name="name">Hợp đồng theo người phụ trách</field>
+        <field name="model_id" ref="model_hop_dong_khach_hang"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user'))]"/>
+        <field name="domain_force">['|', '|', '|', ('nhan_vien_phu_trach_id.user_id', '=', user.id), ('khach_hang_id.nhan_vien_phu_trach_id.user_id', '=', user.id), ('cong_viec_id.nhan_vien_thuc_hien_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_hop_dong_manager" model="ir.rule">
+        <field name="name">Hợp đồng toàn bộ cho quản lý</field>
+        <field name="model_id" ref="model_hop_dong_khach_hang"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_khach_hang_user" model="ir.rule">
+        <field name="name">Khách hàng theo người phụ trách</field>
+        <field name="model_id" ref="quan_ly_khach_hang.model_khach_hang"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_user'))]"/>
+        <field name="domain_force">['|', '|', '|', ('nhan_vien_phu_trach_id.user_id', '=', user.id), ('cong_viec_ids.nhan_vien_thuc_hien_id.user_id', '=', user.id), ('tuong_tac_ids.nhan_vien_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_khach_hang_manager" model="ir.rule">
+        <field name="name">Khách hàng toàn bộ cho quản lý</field>
+        <field name="model_id" ref="quan_ly_khach_hang.model_khach_hang"/>
+        <field name="groups" eval="[(4, ref('quan_ly_cong_viec.group_quan_ly_cong_viec_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

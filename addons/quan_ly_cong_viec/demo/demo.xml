@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_nhan_vien_sale_01" model="nhan_vien">
+        <field name="ma_dinh_danh">nv_demo_01</field>
+        <field name="ho_ten_dem">Nguyễn Văn</field>
+        <field name="ten">An</field>
+        <field name="ngay_sinh">1998-05-12</field>
+        <field name="que_quan">Hà Nội</field>
+        <field name="email">nguyenvanan@example.com</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_nhan_vien_sale_02" model="nhan_vien">
+        <field name="ma_dinh_danh">nv_demo_02</field>
+        <field name="ho_ten_dem">Trần Thị</field>
+        <field name="ten">Bình</field>
+        <field name="ngay_sinh">1997-08-20</field>
+        <field name="que_quan">Đà Nẵng</field>
+        <field name="email">tranthibinh@example.com</field>
+    </record>
+
+    <record id="demo_khach_hang_01" model="khach_hang">
+        <field name="ma_khach_hang">KH001</field>
+        <field name="ten_khach_hang">Công ty Minh Phát</field>
+        <field name="loai_khach_hang">vip</field>
+        <field name="so_dien_thoai">0900000001</field>
+        <field name="email">contact@minhphat.vn</field>
+        <field name="dia_chi">Hà Nội</field>
+        <field name="nhan_vien_phu_trach_id" ref="demo_nhan_vien_sale_01"/>
+        <field name="trang_thai">dang_cham_soc</field>
+    </record>
+
+    <record id="demo_khach_hang_02" model="khach_hang">
+        <field name="ma_khach_hang">KH002</field>
+        <field name="ten_khach_hang">Công ty Ánh Dương</field>
+        <field name="loai_khach_hang">si</field>
+        <field name="so_dien_thoai">0900000002</field>
+        <field name="email">sales@anhduong.vn</field>
+        <field name="dia_chi">Hải Phòng</field>
+        <field name="nhan_vien_phu_trach_id" ref="demo_nhan_vien_sale_02"/>
+        <field name="trang_thai">tiem_nang</field>
+    </record>
+
+    <record id="demo_tuong_tac_01" model="tuong_tac_khach_hang">
+        <field name="ten_tuong_tac">Khách yêu cầu báo giá giải pháp</field>
+        <field name="khach_hang_id" ref="demo_khach_hang_01"/>
+        <field name="nhan_vien_id" ref="demo_nhan_vien_sale_01"/>
+        <field name="loai_tuong_tac">bao_gia</field>
+        <field name="ngay_gio">2026-03-25 09:00:00</field>
+        <field name="noi_dung">Khách hàng cần báo giá chi tiết trước cuối tuần và muốn được tư vấn thêm về gói bảo trì.</field>
+        <field name="ket_qua">Đã ghi nhận yêu cầu và hẹn gửi báo giá.</field>
+        <field name="ngay_hen_tiep">2026-03-27 09:00:00</field>
+        <field name="trang_thai">dang_theo_doi</field>
+    </record>
+
+    <record id="demo_tuong_tac_02" model="tuong_tac_khach_hang">
+        <field name="ten_tuong_tac">Hẹn demo sản phẩm</field>
+        <field name="khach_hang_id" ref="demo_khach_hang_02"/>
+        <field name="nhan_vien_id" ref="demo_nhan_vien_sale_02"/>
+        <field name="loai_tuong_tac">lich_hen</field>
+        <field name="ngay_gio">2026-03-24 15:00:00</field>
+        <field name="noi_dung">Khách hàng đồng ý tổ chức buổi demo online và cần xác nhận danh sách người tham gia.</field>
+        <field name="ket_qua">Đã chốt lịch demo sơ bộ.</field>
+        <field name="ngay_hen_tiep">2026-03-28 10:00:00</field>
+        <field name="trang_thai">dang_theo_doi</field>
+    </record>
+
+    <record id="demo_cong_viec_01" model="cong_viec">
+        <field name="ten_cong_viec">Chuẩn bị báo giá cho Minh Phát</field>
+        <field name="mo_ta">Tổng hợp yêu cầu và gửi báo giá chi tiết cho khách hàng.</field>
+        <field name="nhan_vien_thuc_hien_id" ref="demo_nhan_vien_sale_01"/>
+        <field name="khach_hang_id" ref="demo_khach_hang_01"/>
+        <field name="tuong_tac_id" ref="demo_tuong_tac_01"/>
+        <field name="loai_cong_viec_id" ref="quan_ly_cong_viec.loai_cong_viec_bao_gia"/>
+        <field name="nguon_tao">tuong_tac</field>
+        <field name="ngay_bat_dau">2026-03-25</field>
+        <field name="han_chot">2026-03-27</field>
+        <field name="muc_do_uu_tien">cao</field>
+        <field name="trang_thai">dang_lam</field>
+    </record>
+
+    <record id="demo_cong_viec_02" model="cong_viec">
+        <field name="ten_cong_viec">Theo dõi phản hồi báo giá</field>
+        <field name="mo_ta">Gọi lại khách sau khi gửi báo giá để xác nhận nhu cầu bổ sung.</field>
+        <field name="nhan_vien_thuc_hien_id" ref="demo_nhan_vien_sale_01"/>
+        <field name="khach_hang_id" ref="demo_khach_hang_01"/>
+        <field name="tuong_tac_id" ref="demo_tuong_tac_01"/>
+        <field name="loai_cong_viec_id" ref="quan_ly_cong_viec.loai_cong_viec_cham_soc"/>
+        <field name="nguon_tao">ai_goi_y</field>
+        <field name="ngay_bat_dau">2026-03-26</field>
+        <field name="han_chot">2026-03-30</field>
+        <field name="muc_do_uu_tien">trung_binh</field>
+        <field name="trang_thai">moi</field>
+    </record>
+
+    <record id="demo_cong_viec_03" model="cong_viec">
+        <field name="ten_cong_viec">Chuẩn bị nội dung demo cho Ánh Dương</field>
+        <field name="mo_ta">Xây dựng kịch bản demo, tài khoản truy cập và tài liệu giới thiệu.</field>
+        <field name="nhan_vien_thuc_hien_id" ref="demo_nhan_vien_sale_02"/>
+        <field name="khach_hang_id" ref="demo_khach_hang_02"/>
+        <field name="tuong_tac_id" ref="demo_tuong_tac_02"/>
+        <field name="loai_cong_viec_id" ref="quan_ly_cong_viec.loai_cong_viec_lich_hen"/>
+        <field name="nguon_tao">tuong_tac</field>
+        <field name="ngay_bat_dau">2026-03-24</field>
+        <field name="han_chot">2026-03-28</field>
+        <field name="muc_do_uu_tien">cao</field>
+        <field name="trang_thai">dang_lam</field>
+    </record>
+
+    <record id="demo_hop_dong_01" model="hop_dong_khach_hang">
+        <field name="ten_hop_dong">Hợp đồng dịch vụ Minh Phát</field>
+        <field name="khach_hang_id" ref="demo_khach_hang_01"/>
+        <field name="nhan_vien_phu_trach_id" ref="demo_nhan_vien_sale_01"/>
+        <field name="tuong_tac_id" ref="demo_tuong_tac_01"/>
+        <field name="cong_viec_id" ref="demo_cong_viec_01"/>
+        <field name="ngay_ky">2026-04-01</field>
+        <field name="ngay_hieu_luc">2026-04-02</field>
+        <field name="ngay_het_han">2026-12-31</field>
+        <field name="gia_tri">150000000</field>
+        <field name="trang_thai">da_gui</field>
+        <field name="ghi_chu">Khách hàng đang xem xét điều khoản bảo trì.</field>
+    </record>
+</odoo>

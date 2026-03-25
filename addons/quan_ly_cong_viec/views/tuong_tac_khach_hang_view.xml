@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tuong_tac_khach_hang_form" model="ir.ui.view">
+        <field name="name">tuong.tac.khach.hang.form</field>
+        <field name="model">tuong_tac_khach_hang</field>
+        <field name="arch" type="xml">
+            <form string="Tương tác khách hàng">
+                <header>
+                    <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}"/>
+                    <button name="action_create_cong_viec" type="object" string="Sinh công việc" class="oe_highlight"/>
+                    <button name="action_open_ai_wizard" type="object" string="AI gợi ý đầu việc" class="btn-primary" icon="fa-magic"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_cong_viec" type="object" class="oe_stat_button" icon="fa-tasks">
+                            <field name="cong_viec_count" widget="statinfo" string="Công việc"/>
+                        </button>
+                        <button name="action_view_hop_dong" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="hop_dong_count" widget="statinfo" string="Hợp đồng"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ten_tuong_tac"/>
+                        </h1>
+                        <div>
+                            <field name="ma_tuong_tac" readonly="1"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="khach_hang_id"/>
+                            <field name="nhan_vien_id"/>
+                            <field name="loai_tuong_tac"/>
+                            <field name="ngay_gio"/>
+                        </group>
+                        <group>
+                            <field name="ngay_hen_tiep"/>
+                            <field name="tep_dinh_kem" filename="tep_dinh_kem_name"/>
+                            <field name="tep_dinh_kem_name" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Nội dung">
+                            <field name="noi_dung"/>
+                        </page>
+                        <page string="Kết quả">
+                            <field name="ket_qua"/>
+                        </page>
+                        <page string="Công việc phát sinh">
+                            <field name="cong_viec_ids" readonly="1">
+                                <tree>
+                                    <field name="ten_cong_viec"/>
+                                    <field name="nhan_vien_thuc_hien_id"/>
+                                    <field name="han_chot"/>
+                                    <field name="muc_do_uu_tien"/>
+                                    <field name="trang_thai"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tuong_tac_khach_hang_tree" model="ir.ui.view">
+        <field name="name">tuong.tac.khach.hang.tree</field>
+        <field name="model">tuong_tac_khach_hang</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="trang_thai == 'moi'" decoration-warning="trang_thai == 'dang_theo_doi'" decoration-success="trang_thai == 'da_xong'" decoration-danger="trang_thai == 'huy'">
+                <field name="ma_tuong_tac"/>
+                <field name="ten_tuong_tac"/>
+                <field name="khach_hang_id"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_tuong_tac"/>
+                <field name="ngay_gio"/>
+                <field name="ngay_hen_tiep"/>
+                <field name="trang_thai" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tuong_tac_khach_hang_search" model="ir.ui.view">
+        <field name="name">tuong.tac.khach.hang.search</field>
+        <field name="model">tuong_tac_khach_hang</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ma_tuong_tac"/>
+                <field name="ten_tuong_tac"/>
+                <field name="khach_hang_id"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_tuong_tac"/>
+                <field name="trang_thai"/>
+                <filter string="Đang theo dõi" name="dang_theo_doi" domain="[('trang_thai', '=', 'dang_theo_doi')]"/>
+                <filter string="Có lịch hẹn" name="co_lich_hen" domain="[('ngay_hen_tiep', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Khách hàng" name="group_by_khach_hang" context="{'group_by': 'khach_hang_id'}"/>
+                    <filter string="Nhân viên" name="group_by_nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                    <filter string="Loại tương tác" name="group_by_loai" context="{'group_by': 'loai_tuong_tac'}"/>
+                    <filter string="Trạng thái" name="group_by_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tuong_tac_khach_hang" model="ir.actions.act_window">
+        <field name="name">Tương tác khách hàng</field>
+        <field name="res_model">tuong_tac_khach_hang</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_tuong_tac_khach_hang_search"/>
+    </record>
+</odoo>

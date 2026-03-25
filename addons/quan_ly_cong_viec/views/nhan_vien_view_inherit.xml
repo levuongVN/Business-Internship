@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_nhan_vien_form_inherit" model="ir.ui.view">
-        <field name="name">nhan.vien.form.inherit</field>
+    <record id="view_nhan_vien_form_inherit_cong_viec" model="ir.ui.view">
+        <field name="name">nhan.vien.form.inherit.cong.viec</field>
         <field name="model">nhan_vien</field>
         <field name="inherit_id" ref="nhan_su.view_nhan_vien_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('oe_read_only')]" position="before">
                 <div class="oe_button_box" name="button_box">
                     <button name="action_view_cong_viec" type="object" class="oe_stat_button" icon="fa-tasks">
-                        <field name="cong_viec_ids" widget="statinfo" string="Công việc"/>
+                        <field name="cong_viec_count" widget="statinfo" string="Công việc"/>
+                    </button>
+                    <button name="action_view_khach_hang_phu_trach" type="object" class="oe_stat_button" icon="fa-users">
+                        <field name="khach_hang_phu_trach_count" widget="statinfo" string="Khách hàng"/>
+                    </button>
+                    <button name="action_view_tuong_tac" type="object" class="oe_stat_button" icon="fa-comments">
+                        <field name="tuong_tac_count" widget="statinfo" string="Tương tác"/>
                     </button>
                 </div>
             </xpath>
             <xpath expr="//field[@name='email']" position="after">
                 <field name="user_id"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Khách hàng phụ trách">
+                    <field name="khach_hang_phu_trach_ids" readonly="1">
+                        <tree>
+                            <field name="ma_khach_hang"/>
+                            <field name="ten_khach_hang"/>
+                            <field name="loai_khach_hang"/>
+                            <field name="trang_thai"/>
+                        </tree>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>

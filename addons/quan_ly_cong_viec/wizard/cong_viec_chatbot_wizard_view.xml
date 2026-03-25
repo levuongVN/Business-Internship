@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cong_viec_chatbot_wizard_form" model="ir.ui.view">
+        <field name="name">cong.viec.chatbot.wizard.form</field>
+        <field name="model">cong_viec_chatbot_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Chatbot công việc" class="o_qlcv_chat_shell" create="0" delete="0">
+                <sheet style="padding:16px; background:#f5f7fb;">
+                    <div class="o_qlcv_chat_banner">
+                        <div class="o_qlcv_chat_banner_title">Chatbot quản lý công việc</div>
+                        <div class="o_qlcv_chat_banner_text">
+                            Hỏi nhanh theo ngữ cảnh công việc, hoặc hỏi tổng quan toàn bộ module. Khung chat luôn nằm ở phần trên để mỗi lần gửi câu hỏi bạn thấy kết quả ngay.
+                        </div>
+                    </div>
+
+                    <div class="o_qlcv_chat_layout">
+                        <div class="o_qlcv_chat_main">
+                            <div class="o_qlcv_chat_card o_qlcv_chat_latest" attrs="{'invisible': [('tra_loi_gan_nhat', '=', False)]}">
+                                <div class="o_qlcv_chat_caption">Phản hồi mới nhất</div>
+                                <field name="tra_loi_gan_nhat" readonly="1" nolabel="1"/>
+                            </div>
+
+                            <div class="o_qlcv_chat_card">
+                                <div class="o_qlcv_chat_caption">Đặt câu hỏi</div>
+                                <div class="o_qlcv_chat_composer_row">
+                                    <div class="o_qlcv_chat_composer_box">
+                                        <div class="o_qlcv_chat_composer">
+                                            <field name="cau_hoi" nolabel="1" placeholder="Ví dụ: Có công việc nào gần deadline không? Có hợp đồng nào quá hạn không? Khách hàng nào cần chăm sóc gấp?"/>
+                                        </div>
+                                    </div>
+                                    <div class="o_qlcv_chat_actions">
+                                        <button name="action_ask_chatbot" type="object" string="Gửi câu hỏi" class="btn-primary"/>
+                                        <button name="action_clear_chat" type="object" string="Xóa chat" class="btn-secondary"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="o_qlcv_chat_card">
+                                <div class="o_qlcv_chat_caption">Hội thoại</div>
+                                <div class="o_qlcv_chat_history_body">
+                                    <field name="lich_su_html" widget="html" readonly="1" nolabel="1"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="o_qlcv_chat_sidebar">
+                            <div class="o_qlcv_chat_card">
+                                <div class="o_qlcv_chat_caption">Điều khiển</div>
+                                <field name="pham_vi_hoi_dap"/>
+                                <field name="cong_viec_id" options="{'no_create': True}" attrs="{'required': [('pham_vi_hoi_dap', '=', 'mot_cong_viec')], 'invisible': [('pham_vi_hoi_dap', '=', 'tong_quan')]}" placeholder="Chọn công việc để hỏi sâu"/>
+                                <field name="canh_bao_ai" readonly="1" attrs="{'invisible': [('canh_bao_ai', '=', False)]}"/>
+                                <div class="o_qlcv_chat_shortcuts">
+                                    <button name="action_quick_overview" type="object" string="Tổng quan" class="btn-secondary"/>
+                                    <button name="action_quick_deadline" type="object" string="Gần deadline" class="btn-secondary"/>
+                                    <button name="action_quick_contracts" type="object" string="Hợp đồng" class="btn-secondary"/>
+                                    <button name="action_quick_next_steps" type="object" string="Việc tiếp theo" class="btn-secondary"/>
+                                </div>
+                            </div>
+
+                            <div class="o_qlcv_chat_card">
+                                <div class="o_qlcv_chat_caption">Tóm tắt hiện tại</div>
+                                <field name="tong_hop_cong_viec" readonly="1" nolabel="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cong_viec_chatbot" model="ir.actions.act_window">
+        <field name="name">Chatbot công việc</field>
+        <field name="res_model">cong_viec_chatbot_wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_cong_viec_chatbot_wizard_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_pham_vi_hoi_dap': 'tong_quan', 'default_open_in_dialog': True, 'form_view_initial_mode': 'edit'}</field>
+    </record>
+</odoo>

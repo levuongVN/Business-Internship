@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <!-- TREE VIEW -->
     <record id="view_khach_hang_tree" model="ir.ui.view">
         <field name="name">khach.hang.tree</field>
         <field name="model">khach_hang</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-info="trang_thai == 'moi'" decoration-warning="trang_thai == 'tiem_nang'" decoration-muted="trang_thai == 'ngung'">
                 <field name="ma_khach_hang"/>
                 <field name="ten_khach_hang"/>
+                <field name="loai_khach_hang"/>
                 <field name="so_dien_thoai"/>
                 <field name="nhan_vien_phu_trach_id"/>
-                <field name="trang_thai"/>
+                <field name="trang_thai" widget="badge"/>
             </tree>
         </field>
     </record>
 
-    <!-- FORM VIEW -->
     <record id="view_khach_hang_form" model="ir.ui.view">
         <field name="name">khach.hang.form</field>
         <field name="model">khach_hang</field>
@@ -27,7 +25,7 @@
                         <group>
                             <field name="ma_khach_hang"/>
                             <field name="ten_khach_hang"/>
-                            <field name ="loai_khach_hang" />
+                            <field name="loai_khach_hang"/>
                             <field name="trang_thai"/>
                         </group>
                         <group>
@@ -47,14 +45,35 @@
         </field>
     </record>
 
-    <!-- ACTION -->
+    <record id="view_khach_hang_search" model="ir.ui.view">
+        <field name="name">khach.hang.search</field>
+        <field name="model">khach_hang</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ma_khach_hang"/>
+                <field name="ten_khach_hang"/>
+                <field name="so_dien_thoai"/>
+                <field name="nhan_vien_phu_trach_id"/>
+                <field name="trang_thai"/>
+                <field name="loai_khach_hang"/>
+                <filter string="Đang chăm sóc" name="dang_cham_soc" domain="[('trang_thai', '=', 'dang_cham_soc')]"/>
+                <filter string="Tiềm năng" name="tiem_nang" domain="[('trang_thai', '=', 'tiem_nang')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Nhân viên phụ trách" name="group_by_nhan_vien" context="{'group_by': 'nhan_vien_phu_trach_id'}"/>
+                    <filter string="Trạng thái" name="group_by_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                    <filter string="Loại khách hàng" name="group_by_loai" context="{'group_by': 'loai_khach_hang'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="action_khach_hang" model="ir.actions.act_window">
         <field name="name">Khách hàng</field>
         <field name="res_model">khach_hang</field>
         <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_khach_hang_search"/>
     </record>
 
-    <!-- MENU -->
     <menuitem id="menu_quan_ly_khach_hang_root"
               name="Quản lý khách hàng"
               sequence="10"/>
@@ -64,5 +83,4 @@
               parent="menu_quan_ly_khach_hang_root"
               action="action_khach_hang"
               sequence="1"/>
-
 </odoo>

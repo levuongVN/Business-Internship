@@ -1,23 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_khach_hang_form_inherit" model="ir.ui.view">
-        <field name="name">khach.hang.form.inherit</field>
+    <record id="view_khach_hang_form_inherit_cong_viec" model="ir.ui.view">
+        <field name="name">khach.hang.form.inherit.cong.viec</field>
         <field name="model">khach_hang</field>
         <field name="inherit_id" ref="quan_ly_khach_hang.view_khach_hang_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form/sheet" position="before">
                 <header>
-                    <button name="action_create_cong_viec" string="Tạo công việc" type="object" class="oe_highlight"/>
-                    <!-- field trang_thai will be inherited from original view if it was in header, 
-                         but original view didn't have header initially, checking context -->
+                    <button name="action_create_tuong_tac" string="Tạo tương tác" type="object" class="oe_highlight"/>
+                    <button name="action_create_cong_viec" string="Tạo công việc" type="object"/>
+                    <button name="action_create_hop_dong" string="Tạo hợp đồng" type="object"/>
                 </header>
             </xpath>
-             <xpath expr="//sheet/group" position="before">
+            <xpath expr="//sheet/group" position="before">
                 <div class="oe_button_box" name="button_box">
+                    <button name="action_view_tuong_tac" type="object" class="oe_stat_button" icon="fa-comments">
+                        <field name="tuong_tac_count" widget="statinfo" string="Tương tác"/>
+                    </button>
                     <button name="action_view_cong_viec" type="object" class="oe_stat_button" icon="fa-tasks">
-                        <field name="cong_viec_ids" widget="statinfo" string="Công việc"/>
+                        <field name="cong_viec_count" widget="statinfo" string="Công việc"/>
+                    </button>
+                    <button name="action_view_hop_dong" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                        <field name="hop_dong_count" widget="statinfo" string="Hợp đồng"/>
                     </button>
                 </div>
+            </xpath>
+            <xpath expr="//field[@name='ten_khach_hang']" position="attributes">
+                <attribute name="string">Tên hồ sơ khách hàng</attribute>
+            </xpath>
+            <xpath expr="//sheet/group" position="after">
+                <group string="Thông tin doanh nghiệp và liên hệ">
+                    <group>
+                        <field name="ten_cong_ty"/>
+                        <field name="nguoi_lien_he"/>
+                    </group>
+                    <group>
+                        <field name="chuc_vu_nguoi_lien_he"/>
+                    </group>
+                </group>
+                <group string="Theo dõi nhanh">
+                    <field name="tong_cong_viec_mo" readonly="1"/>
+                    <field name="tong_cong_viec_qua_han" readonly="1"/>
+                    <field name="tong_hop_dong" readonly="1"/>
+                    <field name="lich_hen_gan_nhat" readonly="1"/>
+                </group>
+                <notebook>
+                    <page string="Tương tác gần đây">
+                        <field name="tuong_tac_ids" readonly="1">
+                            <tree>
+                                <field name="ma_tuong_tac"/>
+                                <field name="ten_tuong_tac"/>
+                                <field name="loai_tuong_tac"/>
+                                <field name="nhan_vien_id"/>
+                                <field name="ngay_hen_tiep"/>
+                                <field name="trang_thai"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Công việc">
+                        <field name="cong_viec_ids" readonly="1">
+                            <tree>
+                                <field name="ten_cong_viec"/>
+                                <field name="nhan_vien_thuc_hien_id"/>
+                                <field name="han_chot"/>
+                                <field name="muc_do_uu_tien"/>
+                                <field name="trang_thai"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Hợp đồng">
+                        <field name="hop_dong_ids" readonly="1">
+                            <tree>
+                                <field name="so_hop_dong"/>
+                                <field name="ten_hop_dong"/>
+                                <field name="ngay_ky"/>
+                                <field name="ngay_het_han"/>
+                                <field name="trang_thai"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_khach_hang_tree_inherit_cong_viec" model="ir.ui.view">
+        <field name="name">khach.hang.tree.inherit.cong.viec</field>
+        <field name="model">khach_hang</field>
+        <field name="inherit_id" ref="quan_ly_khach_hang.view_khach_hang_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ten_khach_hang']" position="after">
+                <field name="ten_cong_ty"/>
+                <field name="nguoi_lien_he"/>
+                <field name="chuc_vu_nguoi_lien_he" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_khach_hang_search_inherit_cong_viec" model="ir.ui.view">
+        <field name="name">khach.hang.search.inherit.cong.viec</field>
+        <field name="model">khach_hang</field>
+        <field name="inherit_id" ref="quan_ly_khach_hang.view_khach_hang_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ten_khach_hang']" position="after">
+                <field name="ten_cong_ty"/>
+                <field name="nguoi_lien_he"/>
+                <field name="chuc_vu_nguoi_lien_he"/>
             </xpath>
         </field>
     </record>

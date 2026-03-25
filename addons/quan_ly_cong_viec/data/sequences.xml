@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_tuong_tac_khach_hang" model="ir.sequence">
+        <field name="name">Mã tương tác khách hàng</field>
+        <field name="code">tuong_tac_khach_hang</field>
+        <field name="prefix">TTKH/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <record id="seq_hop_dong_khach_hang" model="ir.sequence">
+        <field name="name">Số hợp đồng khách hàng</field>
+        <field name="code">hop_dong_khach_hang</field>
+        <field name="prefix">HD/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

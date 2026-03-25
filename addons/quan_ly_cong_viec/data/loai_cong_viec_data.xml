@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="loai_cong_viec_cham_soc" model="loai_cong_viec">
+        <field name="ten_loai">Chăm sóc khách hàng</field>
+        <field name="mo_ta">Các công việc theo dõi, gọi lại và cập nhật thông tin khách hàng.</field>
+    </record>
+    <record id="loai_cong_viec_bao_gia" model="loai_cong_viec">
+        <field name="ten_loai">Báo giá</field>
+        <field name="mo_ta">Chuẩn bị và gửi báo giá, theo dõi phản hồi báo giá.</field>
+    </record>
+    <record id="loai_cong_viec_lich_hen" model="loai_cong_viec">
+        <field name="ten_loai">Lịch hẹn</field>
+        <field name="mo_ta">Chuẩn bị cuộc hẹn, xác nhận lịch và nội dung làm việc.</field>
+    </record>
+    <record id="loai_cong_viec_hop_dong" model="loai_cong_viec">
+        <field name="ten_loai">Hợp đồng</field>
+        <field name="mo_ta">Các công việc liên quan đến hoàn thiện và theo dõi hợp đồng.</field>
+    </record>
+</odoo>

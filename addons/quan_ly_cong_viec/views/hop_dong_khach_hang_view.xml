@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hop_dong_khach_hang_form" model="ir.ui.view">
+        <field name="name">hop.dong.khach.hang.form</field>
+        <field name="model">hop_dong_khach_hang</field>
+        <field name="arch" type="xml">
+            <form string="Hợp đồng khách hàng">
+                <header>
+                    <field name="trang_thai" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ten_hop_dong"/>
+                        </h1>
+                        <div>
+                            <field name="so_hop_dong" readonly="1"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="khach_hang_id"/>
+                            <field name="nhan_vien_phu_trach_id"/>
+                            <field name="tuong_tac_id" options="{'no_create': True}"/>
+                            <field name="cong_viec_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="ngay_ky"/>
+                            <field name="ngay_hieu_luc"/>
+                            <field name="ngay_het_han"/>
+                            <field name="gia_tri"/>
+                            <field name="is_sap_het_han" readonly="1"/>
+                            <field name="is_qua_han" readonly="1"/>
+                            <field name="tep_dinh_kem" filename="tep_dinh_kem_name"/>
+                            <field name="tep_dinh_kem_name" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ghi chú">
+                            <field name="ghi_chu"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hop_dong_khach_hang_tree" model="ir.ui.view">
+        <field name="name">hop.dong.khach.hang.tree</field>
+        <field name="model">hop_dong_khach_hang</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="trang_thai == 'da_ky'" decoration-danger="trang_thai == 'huy' or trang_thai == 'het_han'" decoration-warning="is_sap_het_han and trang_thai not in ('huy', 'het_han')">
+                <field name="so_hop_dong"/>
+                <field name="ten_hop_dong"/>
+                <field name="khach_hang_id"/>
+                <field name="nhan_vien_phu_trach_id"/>
+                <field name="ngay_ky"/>
+                <field name="ngay_het_han"/>
+                <field name="gia_tri"/>
+                <field name="trang_thai" widget="badge"/>
+                <field name="is_sap_het_han" optional="hide"/>
+                <field name="is_qua_han" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hop_dong_khach_hang_search" model="ir.ui.view">
+        <field name="name">hop.dong.khach.hang.search</field>
+        <field name="model">hop_dong_khach_hang</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="so_hop_dong"/>
+                <field name="ten_hop_dong"/>
+                <field name="khach_hang_id"/>
+                <field name="nhan_vien_phu_trach_id"/>
+                <field name="trang_thai"/>
+                <filter string="Đã ký" name="da_ky" domain="[('trang_thai', '=', 'da_ky')]"/>
+                <filter string="Sắp hết hạn" name="sap_het_han" domain="[('is_sap_het_han', '=', True)]"/>
+                <filter string="Đã hết hạn" name="het_han" domain="[('trang_thai', '=', 'het_han')]"/>
+                <filter string="Quá hạn" name="qua_han" domain="[('is_qua_han', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Khách hàng" name="group_by_khach_hang" context="{'group_by': 'khach_hang_id'}"/>
+                    <filter string="Nhân viên phụ trách" name="group_by_nhan_vien" context="{'group_by': 'nhan_vien_phu_trach_id'}"/>
+                    <filter string="Trạng thái" name="group_by_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hop_dong_khach_hang" model="ir.actions.act_window">
+        <field name="name">Hợp đồng khách hàng</field>
+        <field name="res_model">hop_dong_khach_hang</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hop_dong_khach_hang_search"/>
+    </record>
+</odoo>

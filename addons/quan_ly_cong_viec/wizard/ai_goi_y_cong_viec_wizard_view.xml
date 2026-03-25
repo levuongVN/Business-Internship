@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tuong_tac_ai_goi_y_wizard_form" model="ir.ui.view">
+        <field name="name">tuong.tac.ai.goi.y.wizard.form</field>
+        <field name="model">tuong_tac_khach_hang_ai_wizard</field>
+        <field name="arch" type="xml">
+            <form string="AI gợi ý công việc">
+                <sheet>
+                    <group>
+                        <field name="tuong_tac_id" readonly="1"/>
+                        <field name="warning_message" readonly="1" attrs="{'invisible': [('warning_message', '=', False)]}"/>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="create_task"/>
+                            <field name="ten_cong_viec"/>
+                            <field name="mo_ta"/>
+                            <field name="nhan_vien_thuc_hien_id"/>
+                            <field name="loai_cong_viec_id"/>
+                            <field name="muc_do_uu_tien"/>
+                            <field name="han_chot"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_create_selected_tasks" type="object" string="Tạo công việc đã chọn" class="btn-primary"/>
+                    <button string="Đóng" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
